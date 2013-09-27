@@ -11,6 +11,7 @@
 //-----------------------------------------------------------------------------
 #include "cocos2d.h"
 #include <string>
+
 //-----------------------------------------------------------------------------
 //	Defines & Const Variables
 //-----------------------------------------------------------------------------
@@ -32,10 +33,7 @@ public:
 	
 	//在必要时调用，以清理不必要的内存
 	void Purge();
-protected:
-	CStaticData();
-	~CStaticData();
-	bool Init();
+	CC_SYNTHESIZE_READONLY(std::string, _staticDataPath, StaticDataPath);
 
 public:
 	const char*			StringFromKey(std::string key);
@@ -45,6 +43,11 @@ public:
 	cocos2d::CCPoint  PointFromKey(std::string key);
 	cocos2d::CCRect   RectFromKey(std::string key);
 	cocos2d::CCSize	SizeFromKey(std::string key);
+
+private:
+	CStaticData();
+	~CStaticData();
+	bool Init();	
 
 private:
 	cocos2d::CCDictionary* m_Dictionary;
