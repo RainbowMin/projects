@@ -14,7 +14,13 @@
 //-----------------------------------------------------------------------------
 //	Defines & Const Variables
 //-----------------------------------------------------------------------------
-
+#define STATIC_DATA_STRING(key)		CStaticData::SharedStaticData()->StringFromKey(key)
+#define STATIC_DATA_INT(key)				CStaticData::SharedStaticData()->IntFromKey(key)
+#define STATIC_DATA_FLOAT(key)		CStaticData::SharedStaticData()->FloatFromKey(key)
+#define STATIC_DATA_BOOL(key)			CStaticData::SharedStaticData()->BooleanFromKey(key)
+#define STATIC_DATA_POINT(key)		CStaticData::SharedStaticData()->PointFromKey(key)
+#define STATIC_DATA_RECT(key)			CStaticData::SharedStaticData()->RectFromKey(key)
+#define STATIC_DATA_SIZE(key)			CStaticData::SharedStaticData()->SizeFromKey(key)
 //-----------------------------------------------------------------------------
 //	Declaration
 //-----------------------------------------------------------------------------
@@ -34,7 +40,7 @@ protected:
 public:
 	const char*			StringFromKey(std::string key);
 	int						IntFromKey(std::string key);
-	float						FloatFrom(std::string key);
+	float						FloatFromKey(std::string key);
 	bool						BooleanFromKey(std::string key);
 	cocos2d::CCPoint  PointFromKey(std::string key);
 	cocos2d::CCRect   RectFromKey(std::string key);

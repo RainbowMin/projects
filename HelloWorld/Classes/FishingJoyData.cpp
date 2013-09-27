@@ -10,6 +10,7 @@
 //	Include
 //-----------------------------------------------------------------------------
 #include "FishingJoyData.h"
+#include "StaticData.h"
 //-----------------------------------------------------------------------------
 //	Defines & Const Variables
 //-----------------------------------------------------------------------------
@@ -65,6 +66,22 @@ bool CFishingJoyData::Init()
 
 	return true;
 }
+
+//-----------------------------------------------------------------------------
+void CFishingJoyData::Flush()
+{
+	cocos2d::CCUserDefault::sharedUserDefault()->setFloatForKey("sound", this->GetSoundVolume());
+	cocos2d::CCUserDefault::sharedUserDefault()->setFloatForKey("beginner", this->GetIsBeginner());
+	cocos2d::CCUserDefault::sharedUserDefault()->setFloatForKey("gold", this->GetGold());
+	cocos2d::CCUserDefault::sharedUserDefault()->setFloatForKey("music", this->GetMusicVolume());
+	cocos2d::CCUserDefault::sharedUserDefault()->flush();
+	cocos2d::CCUserDefault::sharedUserDefault()->purgeSharedUserDefault();
+	//每次对CCUserDefault进行操作后，都会调用purgeSharedUserDefault()将其删除，
+	//这是因为FishingJoyData和CCUserDefault中都保存着游戏的数据，
+	//因此，只在与外部文件交互时，我们才打开CCUserDefault,保存数据，然后删除CCUserDefault，以避免重复占用游戏数据，而度内存造成浪费
+	//还有,别忘了在程序进入后台时调用flush方法，及时保存游戏数据
+}
+
 //-----------------------------------------------------------------------------
 //	FishingJoyData.cpp
 //-----------------------------------------------------------------------------

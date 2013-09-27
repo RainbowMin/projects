@@ -24,7 +24,7 @@ class CFishingJoyData : public cocos2d::CCObject
 {
 public:
 	static CFishingJoyData* SharedFishingJoyData();
-	void Purge();
+	void Purge();//在必要时调用，以清理不必要的内存
 protected:
 	CFishingJoyData();
 	~CFishingJoyData();
@@ -32,8 +32,12 @@ protected:
 
 private:
 	void Reset() {}
-	void Flush() {}
-	void SetIsBeginner(bool IsBeginner) {}
+	void Flush();//用于将数据存储到外部资源去
+	void SetIsBeginner(bool IsBeginner) {m_IsBeginner = IsBeginner;}
+	bool GetIsBeginner() {return m_IsBeginner;}
+	float GetSoundVolume() {return m_fSoundVolume;}
+	float GetMusicVolume() {return m_fMusicVolume;}
+	int GetGold() {return m_nGold;}
 
 private:
 	bool m_IsBeginner;
