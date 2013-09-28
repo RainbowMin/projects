@@ -1,8 +1,8 @@
 //-----------------------------------------------------------------------------
 /**
-	文件名称：FishLayer.h
+	文件名称：Fish.h
 	作    者：MinJie
-	建立日期：2013/9/27
+	建立日期：2013/9/28
 */
 //-----------------------------------------------------------------------------
 #pragma once
@@ -10,20 +10,26 @@
 //	Include
 //-----------------------------------------------------------------------------
 #include "cocos2d.h"
-#include "Fish.h"
 //-----------------------------------------------------------------------------
 //	Defines & Const Variables
 //-----------------------------------------------------------------------------
-
+typedef enum FishType
+{
+	k_Fish_Type_Red = 0,
+	k_Fish_Type_Yellow,
+	k_Fish_Type_Count
+};
 //-----------------------------------------------------------------------------
 //	Declaration
 //-----------------------------------------------------------------------------
-class CFishLayer : public cocos2d::CCLayer
+class CFish : public cocos2d::CCNode
 {
 public:
-	CREATE_FUNC(CFishLayer);
-	bool init();
+	static CFish* create(FishType type = k_Fish_Type_Red);
+	bool init(FishType type = k_Fish_Type_Red);
+	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_fishSprite, FishSprite);
+	CC_SYNTHESIZE_READONLY(int, m_type, Type);
 };
 //-----------------------------------------------------------------------------
-//	FishLayer.h
+//	Fish.h
 //-----------------------------------------------------------------------------

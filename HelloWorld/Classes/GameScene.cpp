@@ -15,6 +15,8 @@
 #include "MenuLayer.h"
 #include "BackgroundLayer.h"
 #include "CannonLayer.h"
+#include "StaticData.h"
+#include "FishingJoyData.h"
 //-----------------------------------------------------------------------------
 //	Defines & Const Variables
 //-----------------------------------------------------------------------------
@@ -76,8 +78,22 @@ CGameScene::~CGameScene()
 void CGameScene::preloadResources()
 {
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("fishingjoy_resource.plist");
+
+	int frameCount = STATIC_DATA_INT("fish_frame_count");
+	for (int type = k_Fish_Type_Red; type < k_Fish_Type_Count; type++)
+	{
+		CCAnimation* fishAnimation = CCAnimation::create();
+		for (int i = 0; i < frameCount; i++)
+		{
+			fishAnimation->addSpriteFrameWithFileName(
+				CCString::createWithFormat(STATIC_DATA_STRING("fish_frame_name_format"), type, i)->getCString());
+		}
+		fishAnimation->setDelayPerUnit(STATIC_DATA_FLOAT("fish_frame_delay"));
+		CCString* animationName = CCString::createWithFormat(STATIC_DATA_STRING("fish_animation"),type);
+		CCAnimationCache::sharedAnimationCache()->addAnimation(fishAnimation, animationName->getCString());
+	}
+	CFishingJoyData::SharedFishingJoyData();
 	
-	//CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("fishingjoy_resource.plist");
 }
 
 //-----------------------------------------------------------------------------
