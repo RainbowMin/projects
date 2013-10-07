@@ -60,6 +60,7 @@ bool CGameScene::init()
 	m_panelLayer = CPanelLayer::create();
 	this->addChild(m_panelLayer);
 
+	//由于菜单界面只在暂停的时候才出现，所以我们并不直接将其添加进场景中，而是调用retain方法将其保留下来，方便日后访问。
 	m_menuLayer = CMenuLayer::create();
 	CC_SAFE_RETAIN(m_menuLayer);
 
@@ -69,6 +70,7 @@ bool CGameScene::init()
 //-----------------------------------------------------------------------------
 CGameScene::~CGameScene()
 {
+	//对应retain,这里调用Release，保证内存不会泄露
 	CC_SAFE_RELEASE(m_menuLayer);
 }
 
@@ -79,20 +81,31 @@ void CGameScene::preloadResources()
 {
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("fishingjoy_resource.plist");
 
+	//以下代码创建了两个不同的动画帧序列，使用时获取动画可以这么做:CCAnimation* animation = CCAnimationCache::sharedAnimationCache()->animationByName(const char* name);
 	int frameCount = STATIC_DATA_INT("fish_frame_count");
 	for (int type = k_Fish_Type_Red; type < k_Fish_Type_Count; type++)
 	{
-		CCAnimation* fishAnimation = CCAnimation::create();
+		//以下代码会创建animation失败
+// 		CCAnimation* fishAnimation = CCAnimation::create();
+// 		for (int i = 0; i < frameCount; i++)
+// 		{
+// 			fishAnimation->addSpriteFrameWithFileName(
+// 				CCString::createWithFormat(STATIC_DATA_STRING("fish_frame_name_format"), type, i)->getCString());
+// 		}
+
+		CCArray* spriteFramesArray = CCArray::createWithCapacity(frameCount);
 		for (int i = 0; i < frameCount; i++)
 		{
-			fishAnimation->addSpriteFrameWithFileName(
-				CCString::createWithFormat(STATIC_DATA_STRING("fish_frame_name_format"), type, i)->getCString());
+			CCString* fileName = CCString::createWithFormat(STATIC_DATA_STRING("fish_frame_name_format"), type, i);
+			CCSpriteFrame* spriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(fileName->getCString());
+			spriteFramesArray->addObject(spriteFrame);
 		}
-		fishAnimation->setDelayPerUnit(STATIC_DATA_FLOAT("fish_frame_delay"));
+		CCAnimation* fishAnimation = CCAnimation::createWithSpriteFrames(spriteFramesArray);
+		fishAnimation->setDelayPerUnit(STATIC_DATA_FLOAT("fish_frame_delay"));		
 		CCString* animationName = CCString::createWithFormat(STATIC_DATA_STRING("fish_animation"),type);
 		CCAnimationCache::sharedAnimationCache()->addAnimation(fishAnimation, animationName->getCString());
 	}
-	CFishingJoyData::SharedFishingJoyData();
+
 	
 }
 

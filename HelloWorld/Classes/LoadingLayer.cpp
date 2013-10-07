@@ -10,7 +10,6 @@ CLoadingLayer::CLoadingLayer()
 bool CLoadingLayer::init()
 {
 	CCLayer::init();
-
 // 	// 设置进度条的背景图片 我们把他放到屏幕下方的1/5处	
 // 	CCSprite* pLoadingBgSprite = CCSprite::create("loading_bg.png");
 // 	pLoadingBgSprite->setPosition(ccp(getWinSize().width/2+getWinOrigin().x, getWinSize().height/5 + getWinOrigin().y));

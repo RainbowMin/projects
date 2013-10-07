@@ -13,7 +13,7 @@
 //-----------------------------------------------------------------------------
 //	Defines & Const Variables
 //-----------------------------------------------------------------------------
-typedef enum FishType
+typedef enum EFishType
 {
 	k_Fish_Type_Red = 0,
 	k_Fish_Type_Yellow,
@@ -25,8 +25,8 @@ typedef enum FishType
 class CFish : public cocos2d::CCNode
 {
 public:
-	static CFish* create(FishType type = k_Fish_Type_Red);
-	bool init(FishType type = k_Fish_Type_Red);
+	static CFish* create(EFishType type = k_Fish_Type_Red);
+	bool init(EFishType type = k_Fish_Type_Red);
 	CC_SYNTHESIZE_READONLY(cocos2d::CCSprite*, m_fishSprite, FishSprite);
 	CC_SYNTHESIZE_READONLY(int, m_type, Type);
 };

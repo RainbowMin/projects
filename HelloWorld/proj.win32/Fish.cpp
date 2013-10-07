@@ -22,7 +22,7 @@ enum
 //-----------------------------------------------------------------------------
 //	Implementation
 //-----------------------------------------------------------------------------
-CFish* CFish::create(FishType type)
+CFish* CFish::create(EFishType type)
 {
 	CFish* fish = new CFish();
 	fish->init(type);
@@ -31,8 +31,11 @@ CFish* CFish::create(FishType type)
 }
 
 //-----------------------------------------------------------------------------
-bool CFish::init(FishType type)
+bool CFish::init(EFishType type)
 {
+	//CCAnimation只是用于存放动画，真正让动画播放起来的是动作类CCAnimate
+	//CCAnimate只能由CCSprite及其子类播放
+
 	m_type = type;
 	CCString* animationName = CCString::createWithFormat(STATIC_DATA_STRING("fish_animation"), m_type);
 	CCAnimation* fishAnimation = CCAnimationCache::sharedAnimationCache()->animationByName(animationName->getCString());
